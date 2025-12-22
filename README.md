@@ -28,7 +28,7 @@ Add `polar-rs` to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-polar-rs = "0.1.0"
+polar-rs = { git = "https://github.com/MiPsicoRed/polar-rs" }
 ```
 
 Generated with: https://polar.sh/docs/llms-full.txt
