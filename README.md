@@ -29,3 +29,6 @@ Add `polar-rs` to your `Cargo.toml`:
 ```toml
 [dependencies]
 polar-rs = "0.1.0"
+```
+
+Generated with: https://polar.sh/docs/llms-full.txt
