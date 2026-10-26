@@ -27,7 +27,7 @@ pub mod webhook;
 
 pub use client::PolarClient;
 pub use error::{PolarError, Result};
-pub use webhook::WebhookVerifier;
+pub use webhook::{EventType, WebhookEvent, WebhookVerifier};
 
 /// Commonly used imports for working with this crate.
 ///

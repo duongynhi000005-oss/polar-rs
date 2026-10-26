@@ -115,3 +115,50 @@ fn test_list_params_default() {
     assert!(!json.as_object().unwrap().contains_key("page"));
     assert!(!json.as_object().unwrap().contains_key("limit"));
 }
+
+#[test]
+fn test_customer_state_deserialization_polar_api_flattened() {
+    let json = json!({
+        "id": "cus_01HM3K8N2P9X4ABCD",
+        "created_at": "2024-01-15T10:00:00Z",
+        "modified_at": "2024-04-25T14:30:00Z",
+        "email": "customer@example.com",
+        "name": "Jane Doe",
+        "external_id": "usr_998877",
+        "billing_address": {
+            "country": "US"
+        },
+        "active_subscriptions": [
+            {
+                "id": "sub_01HM3K8N2P9X4ABCD",
+                "status": "active",
+                "product_id": "prod_01H",
+                "current_period_start": "2024-04-25T14:30:00Z",
+                "current_period_end": "2024-05-25T14:30:00Z",
+                "cancel_at_period_end": false,
+                "created_at": "2024-01-15T10:00:00Z"
+            }
+        ],
+        "granted_benefits": [
+            {
+                "id": "bft_grant_01H",
+                "benefit_id": "bft_01H",
+                "granted_at": "2024-01-15T10:00:00Z"
+            }
+        ],
+        "active_meters": []
+    });
+
+    let state: CustomerState = serde_json::from_value(json).unwrap();
+    assert_eq!(state.customer.id, "cus_01HM3K8N2P9X4ABCD");
+    assert_eq!(state.customer.external_id, Some("usr_998877".to_string()));
+    assert_eq!(state.customer.name, Some("Jane Doe".to_string()));
+    assert_eq!(state.customer.email, "customer@example.com");
+    assert_eq!(state.subscriptions.len(), 1);
+    assert_eq!(state.active_subscriptions().len(), 1);
+    assert_eq!(state.subscriptions[0].id, "sub_01HM3K8N2P9X4ABCD");
+    assert_eq!(state.subscriptions[0].customer_id, "cus_01HM3K8N2P9X4ABCD");
+    assert_eq!(state.granted_benefits.len(), 1);
+    assert_eq!(state.granted_benefits[0].id, "bft_grant_01H");
+    assert_eq!(state.granted_benefits[0].customer_id, "cus_01HM3K8N2P9X4ABCD");
+}

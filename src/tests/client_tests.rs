@@ -2,7 +2,7 @@ use polar_rs::prelude::*;
 use serde_json::json;
 use wiremock::{
     Mock, MockServer, ResponseTemplate,
-    matchers::{body_json, header, method, path},
+    matchers::{header, method, path},
 };
 
 #[tokio::test]
@@ -26,7 +26,7 @@ async fn test_create_checkout_session_success() {
         .mount(&mock_server)
         .await;
 
-    let client = PolarClient::with_base_url("test_token", mock_server.uri());
+    let client = PolarClient::with_base_url("test_token", format!("{}/v1", mock_server.uri()));
 
     let request = CreateCheckoutRequest::new(vec!["prod_123".to_string()]);
     let mut request = request;
@@ -55,7 +55,7 @@ async fn test_create_checkout_session_api_error() {
         .mount(&mock_server)
         .await;
 
-    let client = PolarClient::with_base_url("test_token", mock_server.uri());
+    let client = PolarClient::with_base_url("test_token", format!("{}/v1", mock_server.uri()));
 
     let request = CreateCheckoutRequest::new(vec!["invalid_prod".to_string()]);
 
@@ -109,7 +109,7 @@ async fn test_get_customer_state_by_external_id() {
         .mount(&mock_server)
         .await;
 
-    let client = PolarClient::with_base_url("test_token", mock_server.uri());
+    let client = PolarClient::with_base_url("test_token", format!("{}/v1", mock_server.uri()));
     let result = client.get_customer_state_by_external_id("user_123").await;
 
     assert!(result.is_ok());
@@ -133,7 +133,7 @@ async fn test_get_customer_not_found() {
         .mount(&mock_server)
         .await;
 
-    let client = PolarClient::with_base_url("test_token", mock_server.uri());
+    let client = PolarClient::with_base_url("test_token", format!("{}/v1", mock_server.uri()));
     let result = client
         .get_customer_state_by_external_id("nonexistent")
         .await;
@@ -182,7 +182,7 @@ async fn test_list_subscriptions_with_pagination() {
         .mount(&mock_server)
         .await;
 
-    let client = PolarClient::with_base_url("test_token", mock_server.uri());
+    let client = PolarClient::with_base_url("test_token", format!("{}/v1", mock_server.uri()));
     let params = ListParams {
         page: Some(1),
         limit: Some(2),
@@ -215,7 +215,7 @@ async fn test_update_customer_by_external_id() {
         .mount(&mock_server)
         .await;
 
-    let client = PolarClient::with_base_url("test_token", mock_server.uri());
+    let client = PolarClient::with_base_url("test_token", format!("{}/v1", mock_server.uri()));
     let update_req = UpdateCustomerRequest {
         email: Some("newemail@example.com".to_string()),
         name: Some("Updated Name".to_string()),
@@ -255,7 +255,7 @@ async fn test_cancel_subscription() {
         .mount(&mock_server)
         .await;
 
-    let client = PolarClient::with_base_url("test_token", mock_server.uri());
+    let client = PolarClient::with_base_url("test_token", format!("{}/v1", mock_server.uri()));
     let result = client.cancel_subscription("sub_123").await;
 
     assert!(result.is_ok());
@@ -278,7 +278,7 @@ async fn test_create_customer_session() {
         .mount(&mock_server)
         .await;
 
-    let client = PolarClient::with_base_url("test_token", mock_server.uri());
+    let client = PolarClient::with_base_url("test_token", format!("{}/v1", mock_server.uri()));
     let request = CreateCustomerSessionRequest {
         customer_id: Some("cus_123".to_string()),
         customer_email: None,
@@ -308,7 +308,7 @@ async fn test_validate_license_key() {
         .mount(&mock_server)
         .await;
 
-    let client = PolarClient::with_base_url("test_token", mock_server.uri());
+    let client = PolarClient::with_base_url("test_token", format!("{}/v1", mock_server.uri()));
     let request = ValidateLicenseKeyRequest {
         key: "POLAR-XXXX-XXXX".to_string(),
         organization_id: Some("org_123".to_string()),

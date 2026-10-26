@@ -78,3 +78,13 @@ pub struct BillingAddress {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub postal_code: Option<String>,
 }
+
+impl CreateCheckoutRequest {
+    /// Create a new checkout request for the given products.
+    pub fn new(products: Vec<String>) -> Self {
+        Self {
+            products,
+            ..Default::default()
+        }
+    }
+}

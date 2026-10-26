@@ -35,6 +35,7 @@ pub struct BenefitGrant {
     /// The identifier of the associated benefit.
     pub benefit_id: String,
     /// The identifier of the customer receiving the benefit.
+    #[serde(default)]
     pub customer_id: String,
     /// The identifier of the associated subscription, if applicable.
     pub subscription_id: Option<String>,

@@ -264,3 +264,15 @@ impl EventType {
         }
     }
 }
+
+impl PartialEq<str> for EventType {
+    fn eq(&self, other: &str) -> bool {
+        self.as_str() == other
+    }
+}
+
+impl PartialEq<&str> for EventType {
+    fn eq(&self, other: &&str) -> bool {
+        self.as_str() == *other
+    }
+}

@@ -28,6 +28,7 @@ pub struct Subscription {
     /// The identifier of the product associated with the subscription.
     pub product_id: String,
     /// The identifier of the customer who owns the subscription.
+    #[serde(default)]
     pub customer_id: String,
     /// The start timestamp of the current billing period.
     pub current_period_start: String,

@@ -1,4 +1,4 @@
-use polar_rs::{WebhookVerifier, webhook::WebhookEvent};
+use polar_rs::WebhookVerifier;
 use serde_json::json;
 use std::collections::HashMap;
 

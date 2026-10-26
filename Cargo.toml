@@ -25,3 +25,23 @@ thiserror = "2.0.17"
 tokio = { version = "1.48.0", features = ["full"] }
 tokio-test = "0.4.4"
 wiremock = "0.6.5"
+
+[[test]]
+name = "client_tests"
+path = "src/tests/client_tests.rs"
+
+[[test]]
+name = "models_tests"
+path = "src/tests/models_tests.rs"
+
+[[test]]
+name = "webhook_tests"
+path = "src/tests/webhook_tests.rs"
+
+[[test]]
+name = "error_tests"
+path = "src/tests/error_tests.rs"
+
+[features]
+default = []
+integration-tests = []
